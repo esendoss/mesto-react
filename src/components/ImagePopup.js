@@ -4,7 +4,7 @@ import close from '../images/close-icon.svg';
 function ImagePopup({ card, onClose }) {
 
     return (
-        <div className={`popup popup_picture ${card.link ? 'popup_opened' : ''}`} onClick={onClose}>
+        <div className={`popup popup_picture ${card.link && 'popup_opened'}`} onClick={onClose}>
             <form className="form" name="pic-form">
                 <div className="popup__container-image">
                     <img className="popup__image" src={card.link} alt={card.name} />

@@ -2,7 +2,7 @@ import React from 'react';
 import '../index.css';
 import close from '../images/close-icon.svg';
 
-function PopupWithForm({ title, name, children, isOpen, onClose }) {
+function PopupWithForm({ title, name, children, isOpen, onClose, buttonText }) {
     return (
         <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}
             onClick={onClose}
@@ -14,7 +14,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose }) {
                     </button>
                     <h3 className="popup__title">{title}</h3>
                     {children}
-                    <button className="popup__submit" type="submit">Сохранить</button>
+                    <button className="popup__submit" type="submit">{buttonText}</button>
                 </form>
             </div>
         </div>

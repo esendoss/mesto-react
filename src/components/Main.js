@@ -10,15 +10,17 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
     //запросы к API
     useEffect(() => {
-        Api.getUserInfo().then(({ name, about, avatar }) => {
-            setUserName(name);
-            setUserDescription(about);
-            setuUserAvatar(avatar);
-        })
+        Api.getUserInfo()
+            .then(({ name, about, avatar }) => {
+                setUserName(name);
+                setUserDescription(about);
+                setuUserAvatar(avatar);
+            })
             .catch(err => console.log(`Ошибка: ${err}`));
-        Api.getInitialCards().then((data) => {
-            setCards(data);
-        })
+        Api.getInitialCards()
+            .then((data) => {
+                setCards(data);
+            })
             .catch(err => console.log(`Ошибка: ${err}`));
     }, []);
 

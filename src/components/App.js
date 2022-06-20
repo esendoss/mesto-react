@@ -54,6 +54,7 @@ function App() {
                 name='edit'
                 title='Редактировать профиль'
                 onClose={closeAllPopups}
+                buttonText='Сохранить'
             >
                 <input className="popup__input popup__input_data_name" type="text" id="name" placeholder="Имя" name="userName" minLength="2" maxLength="40" required />
                 <span className="popup__input-error name-error" id="name-error"></span>
@@ -67,6 +68,7 @@ function App() {
                 name='add'
                 title='Новое место'
                 onClose={closeAllPopups}
+                buttonText='Создать'
             >
                 <input className="popup__input popup__input_data_title" type="text" id="title" name="title" placeholder="Название" minLength="2" maxLength="30" required />
                 <span className="popup__input-error title-error" id="title-error"></span>
@@ -79,6 +81,7 @@ function App() {
                 name='avatar'
                 title='Обновить аватар'
                 onClose={closeAllPopups}
+                buttonText='Сохранить'
             >
                 <input className="popup__input popup__input_data_avatar" type="url" id="avatar" name="avatar" placeholder="Ссылка на картинку" required />
                 <span className="popup__input-error avatar-error" id="avatar-error"></span>
@@ -89,6 +92,7 @@ function App() {
                 name='warning'
                 title='Вы уверены?'
                 onClose={closeAllPopups}
+                buttonText='Да'
             >
             </PopupWithForm>
 
