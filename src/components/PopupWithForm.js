@@ -2,10 +2,10 @@ import React from 'react';
 import '../index.css';
 import close from '../images/close-icon.svg';
 
-function PopupWithForm({title, name, children, isOpen, onClose}) {
+function PopupWithForm({ title, name, children, isOpen, onClose }) {
     return (
         <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}
-        onClick={onClose}
+            onClick={onClose}
         >
             <div className="popup__container">
                 <form className="form" name={name} noValidate>
@@ -18,7 +18,6 @@ function PopupWithForm({title, name, children, isOpen, onClose}) {
                 </form>
             </div>
         </div>
-
     )
 }
 
