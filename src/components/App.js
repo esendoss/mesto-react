@@ -19,7 +19,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState({});
     const [cards, setCards] = useState([]);
-    
+
     const [currentUser, setCurrentUser] = useState([]);
 
     //Api
@@ -69,12 +69,13 @@ function App() {
     //лайк
     function handleCardLike(card) {
         //Снова проверяем, есть ли уже лайк на этой карточке
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
         //Отправляем запрос в API и получаем обновлённые данные карточки
         Api.like(card._id, !isLiked)
             .then((newCard) => {
-                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+                setCards((state) => state.map((c) => (c._id === card._id ? newCard : c))
+                );
             });
     }
 
@@ -82,11 +83,11 @@ function App() {
     function handleCardDelete(card) {
         //Снова проверяем, являемся ли мы владельцем текущей карточки
         const isOwn = card.owner._id === currentUser._id;
-        
+
         // Отправляем запрос в API и получаем обновлённые данные карточки
         Api.deleteCard(card._id, !isOwn)
             .then(() => {
-                setCards((state) => state.filter((c) => c._id === card._id))
+                setCards((state) => state.filter((c) => c._id !== card._id))
             });
     }
 
@@ -132,13 +133,9 @@ function App() {
                     />
                     <Footer />
                 </div>
-
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-
                 <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-
                 <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-
                 <PopupWithForm
                     name='warning'
                     title='Вы уверены?'
@@ -146,7 +143,6 @@ function App() {
                     buttonText='Да'
                 >
                 </PopupWithForm>
-
                 <ImagePopup
                     card={selectedCard}
                     onClose={closeAllPopups}

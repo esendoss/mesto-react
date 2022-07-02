@@ -42,17 +42,14 @@ class Api {
     })
       .then(this._checkError)
   }
-  addUserCard(name, link) {
+  addUserCard(data) {
     return fetch(this._url + '/cards', {
       method: 'POST',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: name,
-        link: link
-      })
+      body: JSON.stringify(data)
     })
       .then(this._checkError)
   }

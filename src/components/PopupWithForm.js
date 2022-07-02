@@ -8,7 +8,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose, buttonText, onS
             onClick={onClose}
         >
             <div className="popup__container">
-                <form className="form" name={name} noValidate onSubmit={onSubmit} >
+                <form className="form" name={name} type="submit" noValidate onSubmit={onSubmit} >
                     <button className="popup__exit popup__exit_edit" type="button" onClick={onClose}>
                         <img className="popup__exit-sign" src={close} alt="Кнопка выхода" />
                     </button>
@@ -18,7 +18,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose, buttonText, onS
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
 export default PopupWithForm;
