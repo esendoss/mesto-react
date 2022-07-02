@@ -9,5 +9,14 @@
 - Верстка - HTML5, стили - CSS3 (Flexbox, Grid Layout)
 - JavaScript (ООП, API)
 - webpack
-- React (CRA, функциональные компоненты, хуки useState и useEffect)
+- React: 
+    + CRA
+    + функциональные компоненты
+    + хуки useState и useEffect
+    + refs
+    + React.createContext
+    + поднятие стейта
 
+**Планы по доработке**
+---
+- Добавить попап с подтверждением удаления карточки

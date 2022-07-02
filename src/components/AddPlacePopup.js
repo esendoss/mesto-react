@@ -3,21 +3,21 @@ import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
-    const titleRef = React.useRef();
-    const urlRef = React.useRef();
+    const nameRef = React.useRef();
+    const linkRef = React.useRef();
 
     function handleSubmit(e) {
         e.preventDefault();
 
         onAddPlace({
-            title: titleRef.current.value,
-            url: urlRef.current.value,
+            name: nameRef.current.value,
+            link: linkRef.current.value,
         });
     }
 
     useEffect(() => {
-        titleRef.current.value = "";
-        urlRef.current.value = "";
+        nameRef.current.value = "";
+        linkRef.current.value = "";
     }, [isOpen]);
 
     return (
@@ -37,7 +37,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                 placeholder="Название"
                 minLength="2"
                 maxLength="30"
-                ref={titleRef}
+                ref={nameRef}
                 defaultValue=""
                 required />
             <span className="popup__input-error title-error" id="title-error"></span>
@@ -48,7 +48,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                 id="url"
                 name="url"
                 placeholder="Ссылка на картинку"
-                ref={urlRef}
+                ref={linkRef}
                 defaultValue=""
                 required />
             <span className="popup__input-error url-error" id="url-error"></span>

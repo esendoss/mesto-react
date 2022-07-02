@@ -3,9 +3,16 @@ import '../index.css';
 import close from '../images/close-icon.svg';
 
 function PopupWithForm({ title, name, children, isOpen, onClose, buttonText, onSubmit }) {
+    
+    function handleOverlayClick(event) {
+        if (event.target === event.currentTarget) {
+            onClose()
+        };
+    }
+    
     return (
-        <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}
-            onClick={onClose}
+        <div className={`popup popup_${name} ${isOpen && 'popup_opened'}`}  
+            onClick={handleOverlayClick}
         >
             <div className="popup__container">
                 <form className="form" name={name} type="submit" noValidate onSubmit={onSubmit} >

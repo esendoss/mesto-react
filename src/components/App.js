@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import '../index.css'
 import '../App.css';
-import Api from '../utils/Api';
+import { api } from '../utils/Api';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import AddPlacePopup from './AddPlacePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
 
 function App() {
     const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
@@ -20,11 +18,11 @@ function App() {
     const [selectedCard, setSelectedCard] = useState({});
     const [cards, setCards] = useState([]);
 
-    const [currentUser, setCurrentUser] = useState([]);
+    const [currentUser, setCurrentUser] = useState({});
 
     //Api
     useEffect(() => {
-        Api.getUserInfo()
+        api.getUserInfo()
             .then((name, about, avatar) => {
                 setCurrentUser(name, about, avatar)
             })
@@ -32,7 +30,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        Api.getInitialCards()
+        api.getInitialCards()
             .then((data) => {
                 setCards(data);
             })
@@ -40,7 +38,7 @@ function App() {
     }, []);
 
     function handleUpdateUser(data) {
-        Api.editProfileInfo(data)
+        api.editProfileInfo(data)
             .then((newProfile) => {
                 setCurrentUser(newProfile);
                 closeAllPopups();
@@ -49,7 +47,7 @@ function App() {
     }
 
     function handleUpdateAvatar(data) {
-        Api.editAvatar(data)
+        api.editAvatar(data)
             .then((newAvatar) => {
                 setCurrentUser(newAvatar);
                 closeAllPopups();
@@ -58,9 +56,10 @@ function App() {
     }
 
     function handleAddPlaceSubmit(data) {
-        Api.addUserCard(data)
+        api.addUserCard(data.name, data.link)
             .then((newCard) => {
                 setCards([newCard, ...cards]);
+                console.log(newCard)
                 closeAllPopups();
             })
             .catch(err => console.log(`Ошибка: ${err}`))
@@ -69,14 +68,14 @@ function App() {
     //лайк
     function handleCardLike(card) {
         //Снова проверяем, есть ли уже лайк на этой карточке
-        const isLiked = card.likes.some((i) => i._id === currentUser._id);
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
 
         //Отправляем запрос в API и получаем обновлённые данные карточки
-        Api.like(card._id, !isLiked)
+        api.updateСardLike(card._id, !isLiked)
             .then((newCard) => {
-                setCards((state) => state.map((c) => (c._id === card._id ? newCard : c))
-                );
-            });
+                setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
+            })
+            .catch(err => console.log(`Ошибка: ${err}`))    
     }
 
     //удаление карточки
@@ -85,13 +84,12 @@ function App() {
         const isOwn = card.owner._id === currentUser._id;
 
         // Отправляем запрос в API и получаем обновлённые данные карточки
-        Api.deleteCard(card._id, !isOwn)
+        api.deleteCard(card._id, !isOwn)
             .then(() => {
                 setCards((state) => state.filter((c) => c._id !== card._id))
-            });
+            })
+            .catch(err => console.log(`Ошибка: ${err}`))    
     }
-
-
 
     //открытие попапов
 
@@ -133,16 +131,11 @@ function App() {
                     />
                     <Footer />
                 </div>
+
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
                 <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
                 <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-                <PopupWithForm
-                    name='warning'
-                    title='Вы уверены?'
-                    onClose={closeAllPopups}
-                    buttonText='Да'
-                >
-                </PopupWithForm>
+
                 <ImagePopup
                     card={selectedCard}
                     onClose={closeAllPopups}

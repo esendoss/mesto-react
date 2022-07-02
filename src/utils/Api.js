@@ -42,14 +42,17 @@ class Api {
     })
       .then(this._checkError)
   }
-  addUserCard(data) {
+  addUserCard(name, link) {
     return fetch(this._url + '/cards', {
       method: 'POST',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
     })
       .then(this._checkError)
   }
@@ -62,7 +65,14 @@ class Api {
     })
       .then(this._checkError)
   }
-  like(cardId) {
+  updateСardLike(cardId, isLiked) {
+    if (isLiked) {
+        return this._like(cardId);
+    } else {
+        return this._dislike(cardId);        
+    }
+}
+  _like(cardId) {
     return fetch(this._url + `/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: {
@@ -71,7 +81,8 @@ class Api {
     })
       .then(this._checkError)
   }
-  dislike(cardId) {
+
+  _dislike(cardId) {
     return fetch(this._url + `/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: {
@@ -80,6 +91,7 @@ class Api {
     })
       .then(this._checkError)
   }
+  
   editAvatar(data) {
     return fetch(this._url + '/users/me/avatar', {
       method: 'PATCH',
@@ -93,7 +105,9 @@ class Api {
   }
 
 }
-export default new Api({
+
+const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-42',
   token: '344a814f-d599-45ca-823f-f73b614ea6ce'
 });
+export { api } 
