@@ -31,17 +31,14 @@ class Api {
       .then(this._checkError)
   }
 
-  editProfileInfo(name, description) {
+  editProfileInfo(data) {
     return fetch(this._url + '/users/me', {
       method: 'PATCH',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: name,
-        about: description
-      })
+      body: JSON.stringify(data)
     })
       .then(this._checkError)
   }
@@ -86,16 +83,14 @@ class Api {
     })
       .then(this._checkError)
   }
-  editAvatar(link) {
+  editAvatar(data) {
     return fetch(this._url + '/users/me/avatar', {
       method: 'PATCH',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        avatar: link
-      })
+      body: JSON.stringify(data)
     })
       .then(this._checkError)
   }

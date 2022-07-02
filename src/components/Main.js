@@ -1,45 +1,33 @@
-import { useEffect, useState } from 'react';
-import Api from '../utils/Api';
+import React from 'react';
 import Card from './Card';
+import '../index.css'
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-    const [userName, setUserName] = useState('');
-    const [userDescription, setUserDescription] = useState('');
-    const [userAvatar, setuUserAvatar] = useState('');
-    const [cards, setCards] = useState([]);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete, cards }) {
 
-    //запросы к API
-    useEffect(() => {
-        Api.getUserInfo()
-            .then(({ name, about, avatar }) => {
-                setUserName(name);
-                setUserDescription(about);
-                setuUserAvatar(avatar);
-            })
-            .catch(err => console.log(`Ошибка: ${err}`));
-        Api.getInitialCards()
-            .then((data) => {
-                setCards(data);
-            })
-            .catch(err => console.log(`Ошибка: ${err}`));
-    }, []);
-
+    //подписываемся на контекст
+    const currentUser = React.useContext(CurrentUserContext);
+    
     return (
         <main className="main">
             <section className="profile page__borders">
                 <div className="profile__info">
-                    <img className="profile__avatar" onClick={onEditAvatar}
-                        style={{ backgroundImage: `url(${userAvatar})` }}
-                    />
-                    <h1 className="profile__name">{userName}</h1>
+                    <img className="profile__avatar" onClick={onEditAvatar} src={currentUser.avatar} />
+                    <h1 className="profile__name">{currentUser.name}</h1>
                     <button onClick={onEditProfile} className="profile__edit-button" type="button" aria-label="Редактировать"></button>
-                    <p className="profile__about">{userDescription}</p>
+                    <p className="profile__about">{currentUser.about}</p>
                 </div>
                 <button onClick={onAddPlace} className="profile__add-button" type="button" aria-label="Добавить"></button>
             </section>
             <ul className="gallery page__borders">
                 {cards.map((card) => (
-                    <Card key={card._id} card={card} onCardClick={onCardClick} />
+                    <Card 
+                    key={card._id} 
+                    card={card} 
+                    onCardClick={onCardClick}
+                    onCardLike={onCardLike}
+                    onCardDelete={onCardDelete}
+                    />
                 ))}
             </ul>
         </main>

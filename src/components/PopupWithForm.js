@@ -2,13 +2,13 @@ import React from 'react';
 import '../index.css';
 import close from '../images/close-icon.svg';
 
-function PopupWithForm({ title, name, children, isOpen, onClose, buttonText }) {
+function PopupWithForm({ title, name, children, isOpen, onClose, buttonText, onSubmit }) {
     return (
         <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}
             onClick={onClose}
         >
             <div className="popup__container">
-                <form className="form" name={name} noValidate>
+                <form className="form" name={name} noValidate onSubmit={onSubmit} >
                     <button className="popup__exit popup__exit_edit" type="button" onClick={onClose}>
                         <img className="popup__exit-sign" src={close} alt="Кнопка выхода" />
                     </button>
@@ -21,4 +21,4 @@ function PopupWithForm({ title, name, children, isOpen, onClose, buttonText }) {
     )
 }
 
-export default PopupWithForm
+export default PopupWithForm;
